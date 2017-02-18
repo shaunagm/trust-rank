@@ -1,0 +1,268 @@
+{% extends 'trustrank/base.html' %}
+
+{% block content %}
+
+<div class="alert alert-dismissible alert-danger">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Hey there!</strong> This site is still a prototype.  The about page describes
+  what the site will look like once the first set of features is complete.  To help you
+  keep track of what's already been built and what hasn't, features that have not
+  yet been built use a red font.
+</div>
+
+<h2>About TrustRank</h2>
+
+<p>Society is built on trust.  Even the smartest and most capable people have to trust
+others, as we simply don’t have the time and resources to double-check everything others say.
+But of course not everyone is trustworthy, or trustworthy to the same degree.  TrustRank’s
+goal is to make a formal accounting of who we trust and why.</p>
+
+<p>Describing who we trust is not the same thing as proscribing who to trust -- that is,
+determining who or what is trustworthy.  Although we expect that many people will use
+TrustRank to determine trustworthiness, we want to be as clear about this distinction
+as possible, so that our users can grasp the limitations of the tool.  TrustRank is
+only as accurate as its users, and its users are, like all human beings, capable of
+making mistakes.</p>
+
+<p>With that caveat out of the way, let’s dive into how the tool works.</p>
+
+<h3>The Trust Score</h3>
+
+<p>Users of TrustRank can submit statements to the site.  A statement is a claim or
+  set of claims hosted anywhere else online, including news stories, social media posts,
+  government webpages, and more.  These claims do not need to be a user’s own claims;
+  in fact, a user has no special ownership or editing power towards their own claims,
+  beyond a thirty minute window after creation.  (Statements can be updated, but this
+  process requires updating the statement source and submitting an update request to
+  TrustRank.)</p>
+
+<p>Every statement has a trust score.  The score is calculated via a transparent
+  algorithm (see “Core Algorithms” below) using trust ratings by TrustRank users
+  of the specific statement, the claimant who made the statement, and the user
+  who made the statement, if the claimant is associated with a TrustRank user.</p>
+
+<p>At this point, it’s useful to distinguish between users and claimants.  A user is
+  any person who makes an account on the TrustRank site.  A claimant is someone to
+  whom one or more statements are attributed.  You may have users who are also
+  claimants, but you may also have users with no attributed statements and claimants
+  with many attributed statements who are not themselves users of the site.  As
+  stated above, users have no special ownership of their own claims.  The only link
+  between a user and claimant is in how their trustworthiness scores influence each other.</p>
+
+<p>A statement’s trust score is calculated via the following sources:</p>
+
+<ul>
+  <li>Whether or not the specific statement is trusted by TrustRank users</li>
+  <li>Whether or not the claimant (person or organization making the statement) is
+    trusted by TrustRank users</li>
+  <li>If the claimant is a TrustRank user, whether that user is trusted by TrustRank
+    users</li>
+</ul>
+
+<h3>Trust But Verify</h3>
+
+<p>At the heart of trust is verification. No one person can verify everything, but
+  together we can assess the truth of all the important statements on which we base
+  our decisions.</p>
+
+<p>Users can create links between statements.  This can be used to determine attribution,
+  indicate that one statement contains another statement, and more.  A key relationship
+  between statements is <strong>verification</strong>.  That is, users may add a statement
+  and indicate that it verifies another.</p>
+
+<p>For example, a user may see a statement describing a President's executive order.  They
+  may then add a statement linking to executive order's listing in the Federal Register,
+  specifying that this new statement <i>verifies</i> the first.</p>
+
+<p>Like all statements, statements which verify other statements may be rated for accuracy.
+  They may also be verified themselves.  "Ah!" you may be thinking.  "So I can submit a
+  verification of a verification of a verification? And then a verification of that?  Is it
+  verifications all the way down?”</p>
+
+<p>In some sense, it is.  But practically, we need to draw a line somewhere.  Certain kinds
+  of verifications are assumed to be true because they come from such trustworthy sources.
+  We call these “base verifications”.  These can be wrong and they can be challenged, but
+  we call them “base verifications” because we believe they will almost always be correct.
+  <span class="text-danger">To provide some consequences to getting it wrong, the TrustRank
+    organization will pay $300 to anyone who can show that a base verification is incorrect.
+  </span<</p>
+
+<p class="text-danger">A given statement will have one of the following verification statuses:</p>
+
+<ul class="text-danger">
+<li><b>Unverified:</b> A statement for which no verifications have been submitted.</li>
+<li><b>In process:</b> A statement for which some verifications have been submitted, but
+  for which no verification has been accepted (see below for definition of 'accepted').</li>
+<li><b>Verified as True/Verified as False:</b> A statement for which one or more verifications
+  have been submitted and accepted.  If more than one verification has been accepted,
+  none are in conflict.</li>
+<li><b>In conflict:</b> A statement for which multiple verifications that been submitted and accepted,
+  are in conflict with each other.</li>
+<li><b>Base-verified:</b>  A statement which has been verified via base verification.  The typical
+  way to resolve a verification conflict is via a verification chain ending in a base verification.</b>
+</ul>
+
+<p class="text-danger">For a verification to be “accepted”, it must be rated as trustworthy by at least two raters,
+  with 66% or more of raters agreeing.</span></p>
+
+<p class="text-danger">A statement’s trust score and verification status are combined into an overall reliability rank,
+  to allow users to quickly and easily decide whether or not to trust a statement.</span></p>
+
+<h3>Facts vs Opinions</h3>
+
+<p>It is, of course, much easier to verify certain kinds of statements than others.
+  Some people use the language of “fact” and “opinion”.  They use “fact” to mean something
+  provable or disprovable, and “opinion” to mean something that cannot be proved or disproved.</p>
+
+<p>We consider opinions to be under-specified facts.  Take, for example, the statement “Cats are
+  better than dogs.”  As is, it’s not provable.  But, if you press the speaker, they might specify,
+  “Cats are easier to take care of than dogs.”  This is now a verifiable statement.  You could,
+  theoretically, do a survey of cat owners and dog owners asking the amount of time and effort they
+  put into pet ownership.  Or you could ask the speaker to specify further.  Perhaps the heart of
+  their claim is that “Cats cause less property damage than dogs”, which you can verify via patterns
+  of insurance claims.  (Or which you could decide you don’t care enough to verify!)</p>
+
+<p class="text-danger">The site is built to encourage facts over opinions, by pushing users and
+  claimants to specify their opinions as much as possible.  Users can rate a statement as being low
+  in specificity, and can provide questions for a claimant to address.  A claimant, seeing that a
+  statement of theirs has provoked controversy on TrustRank, can update or clarify a previous
+  statement through the claim’s source.</p>
+
+<p class="text-danger">In the meantime, the statement will be considered less trustworthy than
+  a statement with a similar trust score but higher specificity, as a more specific statement is
+  considered easier to verify.  Since claimant’s trustworthiness is calculated in part from the
+  trustworthiness of their statements, claimants with a pattern of making non-specific statements
+  will have a lower trust score overall.</p>
+
+<h3>Protecting Against Abuse</h3>
+
+<p>A system of trust relies on the majority of users having good intentions towards the system.
+  It does not require the majority of users to agree on politics or even on basic journalistic
+  standards.  Therefore, our signup and moderation policy is based on keeping out spammers and
+  trolls, and preventing harassment of users, while keeping a hands-off approach to the actual
+  content.</p>
+
+<p>TrustRank has two tiers of users, Starred and Unstarred.  Starred users are treated preferentially
+  in two majors ways.  <span class="text-danger">First, their rankings are given greater weight
+  when calculating trust scores.</span>  Secondly, they’re able to add an unlimited number of
+  statements to the site, make an unlimited number of ratings, and leave an unlimited number
+  of comments.  The following individuals and organizations can automatically become Starred Users:</p>
+
+<ul>
+  <li>Credentialed news organizations of any kind</li>
+  <li>Elected or appointed government officials at any level of local, state, national or
+    international government</li>
+  <li>Credentialed educational institutions, as well as individual administrators, faculty,
+    or adjuncts at said institutions</li>
+</ul>
+
+<p>Additional categories of users will be added to the list above.</p>
+
+<p>The second tier of users, Unstarred Users, are accounts that can be created by anyone.
+  <span class="text-danger">They are limited in the number of statements, comments or ratings
+  they can add per day, and their ratings count for less than those of Starred Users.</span></p>
+
+<p>An Unstarred User may be promoted to a Starred User if their participation on the site
+  demonstrates good faith over time.  An Unstarred User may also be promoted to a Starred User
+  if their professional circumstances change, for instance if they are elected to office or
+  gain a byline at a credentialed news organization.  Less commonly, a Starred User may be
+  demoted to an Unstarred User if they lose their credentials or if they exhibit consistent
+  bad behavior on the site.</p>
+
+<h2>Core Algorithms</h2>
+
+<p>Transparency is essential to verification.  As such, we are committed to keeping our data,
+  our algorithms, and our software public, and to providing easy-to-understand explanations of
+  how everything works.  Our <a href="{% url 'inspect_algorithms' %}">algorithms page</a>
+  displays the algorithms the site is actively using to generate scores as well as past versions
+  we've used.</p>
+
+<p>Whenever an algorithm is updated, we will publicize the update.  Periodically, we will
+  'immortalize' a version of an algorithm by calculating scores with that algorithm and
+  providing those for an explicitly stated period of months or years.  This is useful for
+  third party sites who rely on scores being calculated in a specific way.</p>
+
+<p>The following is a list of core algorithms currently provided by the site:</p>
+
+<ul>
+  <li><b>User Trust Score</b>: provides a universal trust score for a given user</li>
+  <li><b>Statement Trust Score</b>: provides a universal trust score for a given statement</li>
+  <li><b>StatementLink Trust Score</b>: provides a universal trust score for a given link
+    between two statements</li>
+  <li><b>Under-verified Statements Score</b>: provides statements that especially need to be
+    verified</li>
+</ul>
+
+<p>The <a href="{% url 'inspect_algorithms' %}">algorithms page</a> has more detail on
+  how they're currently implemented.</p>
+
+<h3>Miscellaneous Questions</h3>
+
+<h4>Attributing Statements</h4>
+
+<p>Because claimants’ trust scores are influenced by their statements, and vice versa,
+  it’s important that claimants be correctly associated with their statements.  There are
+  a few different obstacles here.</p>
+
+<p class="text-danger"><b>Incorrect user attributions:</b>  Because users can create statement-claimant links for
+  anyone, there will inescapably be some incorrect attributions.  Users may always flag an
+  attribution as potentially incorrect.  Attributions are not accepted by default.  To be accepted,
+  they must be either:</p>
+<ul class="text-danger">
+  <li>marked as correct by a Starred User</li>
+  <li>marked as correct by 66% of all users, with 2 or more users marking</li>
+  <li>marked as correct by a TrustRank admin</li>
+</ul>
+
+<p class="text-danger"><b>Attributing statements across multiple platforms:</b>  A claimant will be considered as a
+  single entity across multiple accounts when:</p>
+<ul class="text-danger">
+  <li>There are two-way links between two different accounts (for instance, a Twitter profile
+    linking to a newspaper byline, which links back to the Twitter profile)</li>
+  <li>The platforms are linked via a verification service like Keybase</li>
+  <li>A user-claimant verifies ownership of multiple platforms via the TrustRank organization</li>
+</ul>
+
+<p class="text-danger"><b>Attributing deleted statements:</b>  When statements are added to TrustRank, we make backups
+  of the statements.  For storage and performance purposes, we do not provide this information
+  for users by default.   Users who wish to challenge the attribution of a deleted statement
+  can submit a request.</p>
+
+<p class="text-danger">If a statement is incorrectly attributed to a claimant and then removed, the statement’s trust
+  score or verification status will no longer be considered when calculating the user’s trust score.</p>
+
+<h4>Making Corrections</h4>
+
+<p>Everyone makes mistakes.  Issuing corrections and retractions is one of the most important signs
+  of trustworthiness, and at TrustRank we try to take this into account.</p>
+
+<p class="text-danger">After a statement is verified as false, the claimant has 48 hours to update/correct their statement.
+  (For claimants that are TrustRank users, we will send an email to the claimant letting them know
+  that their statement has been verified as false and informing them of their 48 hour window.)  If
+  the statement is updated to match the verification status with that window, it will not be counted
+  against their trustworthiness.</p>
+
+<p class="text-danger">If the claimant believes that the verification is incorrect, they do not need to update their
+  statement.  They can dispute the verification by providing a counter-verification, or wait for
+  others to do so.  While their trust score may take a temporary dip, there is no long term impact
+  to the user if one of their statements is verified as false and then refuted.</p>
+
+<h3>Contributing to TrustRank</h3>
+
+<h4>Integrating TrustRank With Other Sites</h4>
+
+<p>Our goal is to create a service/utility to help individuals and organizations understand
+  who and how they trust others.  To that end, all of our data, code and algorithms are open.
+  We provide our data via a <span class="text-danger">rate-limited</span> API.</p>
+
+<p>We are enthusiastic about working with others to integrate TrustRank into their own tools
+  and platforms.</p>
+
+<h4>Contributing to TrustRank</h4>
+
+<p>As this project is in its earliest phases, we do not have a formal contribution system set
+  up.  Informally, though, contributors are welcome!  You can reach out to the project's founder
+  at shaunagm@gmail.com.  You can also check out the project's <a href="https://github.com/shaunagm/trust-rank">
+  github account.</a></p>
+
+{% endblock content %}

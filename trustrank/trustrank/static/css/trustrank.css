@@ -1,3 +1,19 @@
 #trustrank-body {
   margin-top:80px;
 }
+
+.nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+  color: #666666;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  cursor: default;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  font-weight: bold;
+  border-bottom-color: transparent;
+}
+
+#myTabContent {
+    margin-top: 20px;
+}

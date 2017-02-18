@@ -1,0 +1,12 @@
+{% extends 'trustrank/base.html' %}
+
+{% block content %}
+
+  <h2>Add linked statement to {{ object }}</h2>
+  <form class="form-horizontal" action="" method="post" id="add-statement-form">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+  </form>
+
+{% endblock content %}

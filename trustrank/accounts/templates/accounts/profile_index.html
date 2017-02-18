@@ -1,0 +1,30 @@
+{% extends 'trustrank/base.html' %}
+
+{% block content %}
+
+    <div class="row">
+      <div class="col-lg-12 col-md-7 col-sm-6">
+         <h2> Profiles </h2>
+         <a href="{% url 'add_claimant' %}">Add a Claimant</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-7 col-sm-6">
+        <ul class="list-group">
+          {% for object in object_list %}
+             <li class="list-group-item">
+               <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+               {% if object.member %}
+                  <span class="label label-primary">Member</span>
+               {% endif %}
+               {% if object.claimant %}
+                   <span class="label label-warning">Claimant</span>
+               {% endif %}
+             </li>
+         {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+
+{% endblock content %}

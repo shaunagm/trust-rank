@@ -1,0 +1,68 @@
+{% extends 'trustrank/base.html' %}
+
+{% block content %}
+
+    <p>This page displays the source code for the algorithms being used by the site.  Generally,
+      the algorithm currently being used is the one with the highest version number, at the top of
+      the file.  All scores also should display the name of the algorithm used to generate them.</p>
+
+    <h4>Basic Trust Algorithms</h4>
+    <ul>
+      <li><a href="#usertrust">User Trust Algorithm</a></li>
+      <li><a href="#statementtrust">Statement Trust Algorithm</a></li>
+      <li><a href="#statementlinktrust">StatementLink Trust Algorithm</a></li>
+    </ul>
+    <h4>Other Algorithms</h4>
+    <ul>
+      <li><a href="#underverified">Under-verified Statements Algorithm</a></li>
+    </ul>
+
+    <h3 id="usertrust">User Trust Algorithm</h3>
+
+    <p><b>Summary</b>:  The current version (0001) gets all ratings of the user and
+      weights them by the scores of the users rating them.  When a user has no rating,
+      a raw weight of .5 is used by default.  <i>Known limitations</i>: a user can overweight
+      their opinions by submitting multiple ratings; a small group of users can inflate
+      scores by giving each other high ratings regardless of content; .5 is arbitrary and
+      may underweight unscored users.</p>
+
+    {{ usertrust|safe }}
+
+    <h3 id="statementtrust">Statement Trust Algorithm</h3>
+
+    <p><b>Summary</b>:  The current version (0001) gets all ratings of the user and
+      weights them by the scores of the users rating them.  When a user has no rating,
+      a raw weight of .5 is used by default.  <i>Known limitations</i>: a user can overweight
+      their opinions by submitting multiple ratings; a small group of users can inflate
+      scores by giving each other high ratings regardless of content; .5 is arbitrary and
+      may underweight unscored users.</p>
+
+    {{ statementtrust|safe }}
+
+    <h3 id="statementlinktrust">StatementLink Trust Algorithm</h3>
+
+    <p><b>Summary</b>:  The current version (0001) gets all ratings of the user and
+      weights them by the scores of the users rating them.  When a user has no rating,
+      a raw weight of .5 is used by default.  <i>Known limitations</i>: a user can overweight
+      their opinions by submitting multiple ratings; a small group of users can inflate
+      scores by giving each other high ratings regardless of content; .5 is arbitrary and
+      may underweight unscored users.</p>
+
+    {{ statementlinktrust|safe }}
+
+    <h3 id="underverified">Under-verified Statements Algorithm</h3>
+
+    <p><b>Summary</b>:  The current version (0001) gets all ratings and all verifications
+      of a given statement.  The higher the underverification score, the more a statement
+      needs verification.  Statements with no ratings are given the lowest verification
+      score.  The score is the ratio of ratings to verifications, with one added to both
+      sides to prevent a divide-by-zero error. <i>Known limitations</i>: ratings are only
+      a proxy for use (another proxy could be the number of non-verifying linked statements)
+      and do not use the rating data itself (one could imagine wanting to verify a
+      statement rated 5 or 1 moreso than a statement rated 3); the ratings of the verifications
+      are not taken into account, so a user could make some empty/false verifications of
+      a statement and artificially lower the underverification score.</p>
+
+    {{ underverified|safe }}
+
+{% endblock content %}

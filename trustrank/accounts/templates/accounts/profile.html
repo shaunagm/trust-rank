@@ -1,0 +1,77 @@
+{% extends 'trustrank/base.html' %}
+
+{% block content %}
+
+    <div class="row">
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+
+         <!-- Name & Info -->
+         <h2> {{ object }} </h2>
+         {% if object.added_by %}
+            Added by <a href="{{ object.added_by.get_absolute_url}}">{{ object.added_by.name }}</a>
+         {% endif %}
+         {% if object.member %}
+            <br />{{ object.bio }}
+         {% endif %}
+         {% if object.claimant %}
+            <br />{{ object.claimant_bio }}
+         {% endif %}
+
+         <!-- Score -->
+         <h4>Score</h4>
+           {% include 'ratings/score_include.html' with score=object.get_score %}
+
+        <!-- Ratings -->
+        <h4>Ratings</h4>
+          {% include 'ratings/rate_include.html' %}
+
+      </div>
+
+      <div class="col-lg-8">
+
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#ratingsof" data-toggle="tab">Ratings of
+             <span class="badge">{{ object.get_ratings.count }}</span></a></li>
+          {% if object.claimant %}
+            <li><a href="#claims" data-toggle="tab">Claims
+              <span class="badge"></span></a></li>
+          {% endif %}
+          {% if object.member %}
+            <li><a href="#ratingsmade" data-toggle="tab">Ratings made
+              <span class="badge">{{ object.ratings_made.count }}</span></a></li>
+            <li><a href="#friends" data-toggle="tab">Friends
+              <span class="badge"></span></a></li>
+            <li><a href="#claimants" data-toggle="tab">Claimants Added
+              <span class="badge">{{ object.created_claimants.count }}</span></a></li>
+            <li><a href="#statements" data-toggle="tab">Statements Added
+              <span class="badge">{{ object.statements_added.count }}</span></a></li>
+          {% endif %}
+        </ul>
+
+        <div id="myTabContent" class="tab-content">
+
+          <div class="tab-pane fade active in" id="ratingsof">
+            {% include 'trustrank/simple_item_list.html' with title="Ratings of" object_list=object.get_ratings %}
+          </div>
+          <div class="tab-pane fade" id="claims">
+            {% include 'trustrank/simple_item_list.html' with title="Claims" object_list=object.claims.all %}
+          </div>
+          <div class="tab-pane fade" id="ratingsmade">
+            {% include 'trustrank/simple_item_list.html' with title="Ratings made" object_list=object.ratings_made %}
+          </div>
+          <div class="tab-pane fade" id="friends">
+          </div>
+          <div class="tab-pane fade" id="claimants">
+            {% include 'trustrank/simple_item_list.html' with title="Claimants Added" object_list=object.created_claimants.all %}
+          </div>
+          <div class="tab-pane fade" id="statements">
+            {% include 'trustrank/simple_item_list.html' with title="Statements Added" object_list=object.statements_added.all %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+{% endblock content %}

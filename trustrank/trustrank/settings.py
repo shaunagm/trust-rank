@@ -31,12 +31,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Trustrank apps
+    'trustrank',
+    'accounts',
+    'statements',
+    'ratings',
+    # 3rd party apps
+    'rest_framework',
+    'generic_relations',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +127,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = '/'

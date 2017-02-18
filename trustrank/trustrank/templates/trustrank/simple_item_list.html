@@ -1,0 +1,14 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ title }}</h3>
+  </div>
+  <div class="panel-body">
+    <ul class="list-group">
+        {% for object in object_list %}
+            <li class="list-group-item">
+                <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+  </div>
+</div>

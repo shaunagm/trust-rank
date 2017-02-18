@@ -1,0 +1,5 @@
+{% if score.last_calculated is Null %}
+  No scores!
+{% else %}
+  Score:  {{ score.score|floatformat }} (Last calculated: {{ score.last_calculated }})
+{% endif %}

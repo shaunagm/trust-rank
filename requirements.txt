@@ -1,1 +1,3 @@
+coreapi==2.2.4
 Django==1.10.5
+rest-framework-generic-relations==1.1.0

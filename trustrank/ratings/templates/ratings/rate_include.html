@@ -1,0 +1,46 @@
+<select class="form-control" id="rating-select">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
+
+<button type="submit" class="btn btn-primary" onClick="sendRating()">Rate</button>
+
+<script>
+function getCookie(c_name)
+{
+    if (document.cookie.length > 0)
+    {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1)
+        {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return unescape(document.cookie.substring(c_start,c_end));
+        }
+    }
+    return "";
+ }
+
+function sendRating() {
+    var rating = $("#rating-select").val();
+    $.ajaxSetup({
+    headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+    $.ajax({
+        type: 'POST',
+        url: 'http://{{ request.get_host }}/ratings/add-rating/',
+        data: {
+            rating: rating,
+            model: "{{ object.class_name }}",
+            pk: {{ object.pk }}
+        },
+        dataType : 'json',
+        success: function(resp){
+        }
+    });
+}
+</script>
