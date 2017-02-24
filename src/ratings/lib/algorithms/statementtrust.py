@@ -5,6 +5,9 @@ conf = ["version_0001"]
 def version_0001(statement):
     '''Super simple first algorithm: Get all raters, weight by rating of raters'''
     ratings = statement.get_ratings()
+    # If no ratings, return default .5
+    if not ratings:
+        return .5
     # Create dict of ratings to weight
     ratings_to_weight = []
     for rating in ratings:
