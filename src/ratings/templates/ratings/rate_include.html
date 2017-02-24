@@ -39,7 +39,7 @@ function sendRating() {
     });
     $.ajax({
         type: 'POST',
-        url: 'http://{{ request.get_host }}/ratings/add-rating/',
+        url: 'https://{{ request.get_host }}/ratings/add-rating/',
         data: {
             rating: rating,
             model: "{{ object.class_name }}",

@@ -31,7 +31,7 @@ router.register(r'statements', StatementViewSet)
 router.register(r'statementlinks', StatementLinkViewSet)
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(pattern_name='profile_index', permanent=False)),
+    url(r'^$', RedirectView.as_view(pattern_name='about', permanent=False)),
     url(r'^about/$', TemplateView.as_view(template_name='trustrank/about.html'), name='about'),
     url(r'^admin/', admin.site.urls),
     # App urls
