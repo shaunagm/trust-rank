@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^statements/', include('statements.urls')),
     url(r'^ratings/', include('ratings.urls')),
     ## Auth urls
-    url(r'^login/$', auth_views.login, {'template_name': 'accounts/login.html'}, name='login'),
+    url(r'^login/$', auth_views.login, {'template_name': 'accounts/authentication_and_registration/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/login'}, name='logout'),
     # API urls
     url(r'^api/', include(router.urls, namespace='api')),

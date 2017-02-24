@@ -146,3 +146,20 @@ LOGIN_REDIRECT_URL = '/'
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+# Email settings
+
+# For local development purposes only
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 1025
+
+# Production settings:
+EMAIL_HOST = 'smtp.sparkpostmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD =  os.environ['SPARKPOST_API_KEY']
+
+EMAIL_HOST_USER = 'SMTP_Injection'
+EMAIL_USE_TLS = True
+
+PRODUCTION_DOMAIN = "https://trustrank.herokuapp.com"
+NOTIFY_EMAIL = "TrustRank <trustrank-demo@sparkpostbox.com>"   # was django-sparkpost@sparkpostbox.com

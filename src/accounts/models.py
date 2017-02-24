@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import datetime
+import datetime, random, string
 
 from django.db import models
 from django.utils import timezone
@@ -9,6 +9,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
+
+from trustrank.settings import PRODUCTION_DOMAIN, NOTIFY_EMAIL
 
 class ProfileQuerySet(models.QuerySet):
 
@@ -83,8 +85,22 @@ class Profile(models.Model):
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        profile = Profile.objects.create(user=instance)
-        profile.member = True
-        profile.date_joined = timezone.now()
-        profile.save()
+        slug = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(30))
+        ar = ActiveRegistration.objects.create(user=instance, confirmation_slug=slug)
+        # Send confirmation email
+        from django.core.mail import send_mail
+        woo = instance.username
+        message = "Hello %s!  To confirm your account, please follow this link: <a href='%s'>%s</a>" % (woo, ar.confirmation_link(), ar.confirmation_link())
+        send_mail('Confirm your account on TrustRank', message, NOTIFY_EMAIL,
+            [ar.user.email], html_message=message, fail_silently=False)
 post_save.connect(create_user_profile, sender=User)
+
+class ActiveRegistration(models.Model):
+    '''Data table for storing temporary information about accounts'''
+    user = models.OneToOneField(User, unique=True, null=True)
+    date_registered = models.DateTimeField(default=timezone.now)
+    confirmation_slug = models.CharField(max_length=30, blank=True)
+    confirmed = models.BooleanField(default=False)
+
+    def confirmation_link(self):
+        return PRODUCTION_DOMAIN + reverse('sign_up_confirmation', kwargs={'slug': self.confirmation_slug })
