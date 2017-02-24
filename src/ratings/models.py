@@ -70,8 +70,8 @@ class Score(models.Model):
     def calculate_score(self):
         algorithm = self.get_algorithm()
         self.score = algorithm(self.scored_object)
-        if algorithm != self.algorithm_version:  # TODO: save algorithm version name, not method itself
-            self.algorithm_version = algorithm
+        if algorithm.__name__ != self.algorithm_version:  
+            self.algorithm_version = algorithm.__name__
         self.last_calculated = timezone.now()
         self.save()
         return self.score
