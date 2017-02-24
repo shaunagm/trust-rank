@@ -1,3 +1,4 @@
+{% if request.user.is_authenticated %}
 <select class="form-control" id="rating-select">
   <option>1</option>
   <option>2</option>
@@ -7,6 +8,12 @@
 </select>
 
 <button type="submit" class="btn btn-primary" onClick="sendRating()">Rate</button>
+
+{% else %}
+
+<p>Log in to add your ratings</p>
+
+{% endif %}
 
 <script>
 function getCookie(c_name)

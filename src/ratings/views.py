@@ -8,12 +8,14 @@ from django.http import JsonResponse
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 from django.views import generic
+from django.contrib.auth.decorators import login_required
 
 from rest_framework import generics, viewsets, permissions
 from trustrank.permissions import IsOwnerAndNewData
 from ratings.models import Rating
 from ratings.serializers import RatingSerializer
 
+@login_required
 def add_rating(request):
 
     try:

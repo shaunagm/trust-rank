@@ -3,13 +3,23 @@
 {% block content %}
 
     <div class="row">
-      <div class="col-lg-12 col-md-7 col-sm-6">
+      <div class="col-lg-12">
          <h2> Profiles </h2>
-         <a href="{% url 'add_claimant' %}">Add a Claimant</a>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-lg-12 col-md-7 col-sm-6">
+      <div class="col-lg-12 click-to-add">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'add_claimant' %}">Add a claimant</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a> to add claimants
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
         <ul class="list-group">
           {% for object in object_list %}
              <li class="list-group-item">

@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 from django.utils import timezone
 from django.core.urlresolvers import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import generics, viewsets, permissions
 
 from trustrank.permissions import IsOwnerAndNewData
@@ -18,7 +19,7 @@ class ProfileView(generic.DetailView):
     model = Profile
     template_name = 'accounts/profile.html'
 
-class AddClaimantView(generic.edit.CreateView):
+class AddClaimantView(LoginRequiredMixin, generic.edit.CreateView):
     model = Profile
     template_name = "accounts/add_claimant_form.html"
     fields = ['claimant_name', 'claimant_bio']
@@ -28,7 +29,7 @@ class AddClaimantView(generic.edit.CreateView):
 
     def form_valid(self, form):
         form.instance.claimant = True
-        form.instance.added_by = self.request.user
+        form.instance.added_by = self.request.user.profile
         return super(AddClaimantView, self).form_valid(form)
 
 ##################################

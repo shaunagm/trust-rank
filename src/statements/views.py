@@ -2,6 +2,7 @@ import datetime
 from django.shortcuts import render
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import generics, viewsets, permissions
 from trustrank.permissions import IsOwnerAndNewData
 from statements.models import Statement, StatementLink
@@ -16,7 +17,7 @@ class StatementView(generic.DetailView):
     model = Statement
     template_name = 'statements/statement.html'
 
-class AddStatementView(generic.edit.CreateView):
+class AddStatementView(LoginRequiredMixin, generic.edit.CreateView):
     model = Statement
     template_name = "statements/add_statement_form.html"
     fields = ['content', 'link', 'claimant']
@@ -28,7 +29,7 @@ class AddStatementView(generic.edit.CreateView):
         form.instance.added_by = self.request.user.profile
         return super(AddStatementView, self).form_valid(form)
 
-class AddLinkedStatementView(generic.edit.CreateView):
+class AddLinkedStatementView(LoginRequiredMixin, generic.edit.CreateView):
     model = Statement
     template_name = "statements/add_linked_statement_form.html"
     form_class = LinkedStatementForm
